@@ -3,103 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <title>365 Polaroid Project</title>
+
 <style>
-  body {
-    margin: 0;
-    font-family: "Courier New", monospace;
-    background: #87CEEB;
-    overflow: hidden;
-    color: #111;
-  }
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: monospace;
+  background: black;
+}
 
-  /* PIXEL STYLE */
-  h1, h2 {
-    text-align: center;
-    text-shadow: 2px 2px #fff;
-  }
+/* SCREENS */
+.screen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
 
-  .screen {
-    display: none;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+.active {
+  display: block;
+}
 
-  .active {
-    display: flex;
-  }
+/* BACKGROUND IMAGE (YOUR SURF IMAGE) */
+.bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  /* SURFER ANIMATION */
-  .wave {
-    width: 200px;
-    height: 100px;
-    background: blue;
-    border-radius: 50%;
-    position: relative;
-    animation: waveMove 3s infinite;
-  }
+/* MONKE SURFER */
+.monke {
+  position: absolute;
+  bottom: 120px;
+  left: -100px;
+  width: 120px;
+  animation: surf 4s linear forwards;
+}
 
-  .surfer {
-    width: 40px;
-    height: 40px;
-    background: yellow;
-    position: absolute;
-    top: -30px;
-    left: 80px;
-    animation: surf 3s infinite;
-  }
+/* SURF ANIMATION */
+@keyframes surf {
+  0% { left: -100px; transform: rotate(0deg); }
+  50% { left: 40%; transform: rotate(10deg); }
+  100% { left: 110%; transform: rotate(-5deg); }
+}
 
-  @keyframes waveMove {
-    0% { transform: translateX(-50px); }
-    50% { transform: translateX(50px); }
-    100% { transform: translateX(-50px); }
-  }
+/* FLASH */
+.flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+}
 
-  @keyframes surf {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
-  }
+/* MENU */
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  height: 100%;
+  background: #87CEEB;
+}
 
-  /* FLASH EFFECT */
-  .flash {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: white;
-    opacity: 0;
-    pointer-events: none;
-  }
+/* POLAROID */
+.polaroid {
+  width: 160px;
+  height: 200px;
+  background: white;
+  padding: 10px;
+  box-shadow: 5px 5px black;
+  cursor: pointer;
+  text-align: center;
+}
 
-  /* POLAROID MENU */
-  .menu {
-    display: flex;
-    gap: 20px;
-  }
+.polaroid img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
 
-  .polaroid {
-    width: 150px;
-    height: 180px;
-    background: white;
-    padding: 10px;
-    cursor: pointer;
-    box-shadow: 4px 4px black;
-    text-align: center;
-  }
+/* CONTENT PAGES */
+.page {
+  display: none;
+  height: 100vh;
+  background: #f4f4f4;
+  text-align: center;
+  padding-top: 50px;
+}
 
-  .polaroid img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-  }
+.page.active {
+  display: block;
+}
 
-  /* BACK BUTTON */
-  button {
-    margin-top: 20px;
-    padding: 10px;
-    cursor: pointer;
-  }
+button {
+  margin-top: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -108,34 +112,37 @@
 <!-- FLASH -->
 <div class="flash" id="flash"></div>
 
-<!-- INTRO SCREEN -->
+<!-- INTRO -->
 <div id="intro" class="screen active">
-  <h1>365 Polaroid Project</h1>
-  <div class="wave">
-    <div class="surfer"></div>
-  </div>
+  
+  <!-- 🔥 REPLACE WITH YOUR UPLOADED IMAGE -->
+  <img src="your-wave-image.jpg" class="bg">
+
+  <!-- 🐒 MONKE SURFER IMAGE -->
+  <!-- 🔥 REPLACE WITH YOUR MONKE IMAGE -->
+  <img src="monke-surfer.png" class="monke">
+
 </div>
 
-<!-- MENU SCREEN -->
+<!-- MENU -->
 <div id="menu" class="screen">
-  <h2>Select a Polaroid</h2>
   <div class="menu">
-    
+
     <!-- ABOUT -->
     <div class="polaroid" onclick="openPage('about')">
-      <img src="YOUR_ABOUT_IMAGE.jpg">
+      <img src="about.jpg">
       <p>About Me</p>
     </div>
 
     <!-- GALLERY -->
     <div class="polaroid" onclick="openPage('gallery')">
-      <img src="YOUR_GALLERY_IMAGE.jpg">
+      <img src="gallery.jpg">
       <p>Gallery</p>
     </div>
 
     <!-- CONTACT -->
     <div class="polaroid" onclick="openPage('contact')">
-      <img src="YOUR_CONTACT_IMAGE.jpg">
+      <img src="contact.jpg">
       <p>Contact</p>
     </div>
 
@@ -143,54 +150,57 @@
 </div>
 
 <!-- ABOUT PAGE -->
-<div id="about" class="screen">
-  <h2>About Me</h2>
-  <p>This is where you write about your 365-day Polaroid project.</p>
+<div id="about" class="page">
+  <h1>About Me</h1>
+  <p>Write about your 365-day Polaroid project here.</p>
   <button onclick="goBack()">Back</button>
 </div>
 
 <!-- GALLERY PAGE -->
-<div id="gallery" class="screen">
-  <h2>Photo Gallery</h2>
+<div id="gallery" class="page">
+  <h1>Photo Gallery</h1>
 
-  <!-- 🔥 ADD YOUR POLAROIDS HERE -->
-  <img src="PHOTO1.jpg" width="150">
-  <img src="PHOTO2.jpg" width="150">
-  <img src="PHOTO3.jpg" width="150">
+  <!-- 📸 ADD YOUR PHOTOS HERE -->
+  <img src="photo1.jpg" width="150">
+  <img src="photo2.jpg" width="150">
+  <img src="photo3.jpg" width="150">
 
+  <br>
   <button onclick="goBack()">Back</button>
 </div>
 
 <!-- CONTACT PAGE -->
-<div id="contact" class="screen">
-  <h2>Contact</h2>
+<div id="contact" class="page">
+  <h1>Contact</h1>
   <p>Email: your@email.com</p>
   <p>Instagram: @yourhandle</p>
   <button onclick="goBack()">Back</button>
 </div>
 
 <script>
-  // AUTO TRANSITION INTRO → FLASH → MENU
+// TIMELINE: SURF → FLASH → MENU
+setTimeout(() => {
+  document.getElementById("flash").style.opacity = 1;
+
   setTimeout(() => {
-    document.getElementById("flash").style.opacity = "1";
-
-    setTimeout(() => {
-      document.getElementById("flash").style.opacity = "0";
-      document.getElementById("intro").classList.remove("active");
-      document.getElementById("menu").classList.add("active");
-    }, 500);
-
-  }, 3000);
-
-  function openPage(page) {
-    document.getElementById("menu").classList.remove("active");
-    document.getElementById(page).classList.add("active");
-  }
-
-  function goBack() {
-    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById("intro").classList.remove("active");
     document.getElementById("menu").classList.add("active");
-  }
+    document.getElementById("flash").style.opacity = 0;
+  }, 400);
+
+}, 3500);
+
+// OPEN PAGE
+function openPage(page) {
+  document.getElementById("menu").classList.remove("active");
+  document.getElementById(page).classList.add("active");
+}
+
+// BACK
+function goBack() {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("menu").classList.add("active");
+}
 </script>
 
 </body>
